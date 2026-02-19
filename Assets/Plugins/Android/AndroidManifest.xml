@@ -4,18 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <!-- ===== PERMISOS BLUETOOTH ANDROID 12+ ===== -->
-<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-<uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
     
     <!-- Si vas a hacer escaneo de dispositivos -->
-<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <!-- ===== PERMISOS PARA VERSIONES ANTERIORES A ANDROID 12 ===== -->
-<uses-permission android:name="android.permission.BLUETOOTH"
-    android:maxSdkVersion="30"/>
-<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"
-    android:maxSdkVersion="30"/>
-
+    <uses-permission android:name="android.permission.BLUETOOTH"
+        android:maxSdkVersion="30"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"
+        android:maxSdkVersion="30"/>
 
     <!-- Opcional si usas BLE -->
     <uses-feature android:name="android.hardware.bluetooth_le" android:required="false" />
@@ -24,7 +23,7 @@
 
         <!-- Used when Application Entry is set to Activity -->
         <activity android:name="com.unity3d.player.UnityPlayerActivity"
-                  android:theme="@style/UnityThemeSelector">        
+                  android:theme="@style/UnityThemeSelector">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
