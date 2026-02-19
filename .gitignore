@@ -31,10 +31,8 @@
 # Jetbrains Rider personal-layer settings
 *.DotSettings.user
 
-# Visual Studio / VS Code / Rider cache directory
+# Visual Studio cache directory
 .vs/
-.vscode/
-.idea/
 
 # Gradle cache directory
 .gradle/
@@ -68,23 +66,12 @@ sysinfo.txt
 # Mono auto generated files
 mono_crash.*
 
-# Builds y Keystores Móviles (¡NUNCA SUBIR LLAVES!)
+# Builds
 *.apk
 *.aab
 *.unitypackage
 *.unitypackage.meta
 *.app
-*.keystore
-*.jks
-
-# Archivos basura del Sistema Operativo (Mac / Windows)
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
 
 # Crashlytics generated file
 crashlytics-build.properties
@@ -97,6 +84,9 @@ InitTestScene*.unity*
 /[Aa]ssets/StreamingAssets/aa*
 /[Aa]ssets/AddressableAssetsData/link.xml*
 /[Aa]ssets/Addressables_Temp*
+# By default, Addressables content builds will generate addressables_content_state.bin
+# files in platform-specific subfolders, for example:
+# /Assets/AddressableAssetsData/OSX/addressables_content_state.bin
 /[Aa]ssets/AddressableAssetsData/*/*.bin*
 
 # Visual Scripting auto-generated files
@@ -104,9 +94,6 @@ InitTestScene*.unity*
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db.meta
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers.meta
-
-# Auto-generated scenes by play mode tests
-/[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
