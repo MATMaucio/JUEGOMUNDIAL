@@ -3,28 +3,85 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- ===== PERMISOS BLUETOOTH ANDROID 12+ ===== -->
-<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-<uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
-    
-    <!-- Si vas a hacer escaneo de dispositivos -->
-<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- ============================================================
+         PERMISOS BLUETOOTH — ANDROID 12+ (API 31+)
+         ============================================================
+         Estos tres permisos son los requeridos desde Android 12.
+         Se separaron del permiso genérico BLUETOOTH que existía antes.
 
-    <!-- ===== PERMISOS PARA VERSIONES ANTERIORES A ANDROID 12 ===== -->
-<uses-permission android:name="android.permission.BLUETOOTH"
-    android:maxSdkVersion="30"/>
-<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"
-    android:maxSdkVersion="30"/>
+         BLUETOOTH_SCAN     → Buscar dispositivos cercanos / emparejados
+         BLUETOOTH_CONNECT  → Conectarse a dispositivos emparejados
+         BLUETOOTH_ADVERTISE→ Anunciar el dispositivo como servidor
+                              NECESARIO para listenUsingRfcommWithServiceRecord()
+                              Sin este permiso, StartServer() falla en Android 12+
+                              sin lanzar un error claro.
+    -->
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"
+        android:usesPermissionFlags="neverForLocation" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
 
+    <!-- ============================================================
+         UBICACIÓN — Requerida en Android 11 y anteriores para escaneo BT
+         ============================================================
+         En Android 12+ ya no es obligatoria para Bluetooth clásico
+         si usas neverForLocation en BLUETOOTH_SCAN (arriba).
+         Se mantiene por compatibilidad con dispositivos Android 10/11.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-    <!-- Opcional si usas BLE -->
-    <uses-feature android:name="android.hardware.bluetooth_le" android:required="false" />
+    <!-- ============================================================
+         PERMISOS LEGACY — Android 11 y anteriores (API <= 30)
+         ============================================================
+         En Android 12+ estos permisos son ignorados.
+         maxSdkVersion="30" asegura que no aparezcan en Android 12+.
 
+         BLUETOOTH       → Conectar y comunicar con dispositivos emparejados
+         BLUETOOTH_ADMIN → Iniciar descubrimiento, modificar configuración BT
+    -->
+    <uses-permission android:name="android.permission.BLUETOOTH"
+        android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"
+        android:maxSdkVersion="30" />
+
+    <!-- ============================================================
+         HARDWARE — Bluetooth Clásico (SPP)
+         ============================================================
+         Tu proyecto usa Bluetooth Clásico (Serial Port Profile / RFCOMM),
+         NO Bluetooth Low Energy (BLE).
+
+         android.hardware.bluetooth     → Bluetooth clásico (el que usas)
+         android.hardware.bluetooth_le  → BLE (no lo usas, se mantiene false)
+
+         required="true" en bluetooth clásico significa que la app
+         NO aparecerá en Play Store en dispositivos sin Bluetooth.
+         Si quieres que aparezca igual, cambia a required="false".
+    -->
+    <uses-feature android:name="android.hardware.bluetooth"
+        android:required="true" />
+    <uses-feature android:name="android.hardware.bluetooth_le"
+        android:required="false" />
+
+    <!-- ============================================================
+         APPLICATION
+         ============================================================
+         NOTA SOBRE LAS DOS ACTIVIDADES:
+         El manifest original tenía UnityPlayerActivity Y
+         UnityPlayerGameActivity ambas como LAUNCHER.
+         Eso causa que aparezcan DOS íconos de la app en el dispositivo.
+
+         → Usa SOLO la que corresponde a tu configuración en
+           Project Settings > Player > Android > Application Entry Point.
+
+         Por defecto Unity usa UnityPlayerActivity.
+         Si tu proyecto usa GameActivity, comenta/elimina la otra.
+    -->
     <application>
 
-        <!-- Used when Application Entry is set to Activity -->
+        <!-- OPCIÓN A: Activity estándar (la más común en Unity) -->
         <activity android:name="com.unity3d.player.UnityPlayerActivity"
-                  android:theme="@style/UnityThemeSelector">        
+                  android:theme="@style/UnityThemeSelector"
+                  android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -32,9 +89,13 @@
             <meta-data android:name="unityplayer.UnityActivity" android:value="true" />
         </activity>
 
-        <!-- Used when Application Entry is set to GameActivity -->
+        <!--
+        OPCIÓN B: GameActivity (descomenta esta y comenta la de arriba
+        si tu proyecto usa Application Entry Point = GameActivity)
+
         <activity android:name="com.unity3d.player.UnityPlayerGameActivity"
-                  android:theme="@style/BaseUnityGameActivityTheme">
+                  android:theme="@style/BaseUnityGameActivityTheme"
+                  android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -42,6 +103,7 @@
             <meta-data android:name="unityplayer.UnityActivity" android:value="true" />
             <meta-data android:name="android.app.lib_name" android:value="game" />
         </activity>
+        -->
 
     </application>
 </manifest>
