@@ -1,28 +1,21 @@
 using UnityEngine;
 
 /// <summary>
-/// CubeItem
-/// --------
-/// Componente que identifica un cubo dentro del juego
-/// mediante un ID único en formato string.
-///
-/// Este script NO contiene lógica.
-/// Solo actúa como contenedor de datos (Data Holder).
-///
-/// Uso típico:
-/// - Asociar un identificador único a cada cubo.
-/// - Permitir sincronización por Bluetooth.
-/// - Diferenciar objetos al enviarlos por red.
+/// ============================================================
+/// CubeItem — SIN CAMBIOS
+/// ============================================================
+/// 
+/// Este script NO requiere modificaciones.
+/// Actúa solo como Data Holder (contenedor de datos).
+/// Solo tiene el campo cubeID para identificar cada cubo.
+/// ============================================================
 /// </summary>
 public class CubeItem : MonoBehaviour
 {
     /// <summary>
     /// Identificador único del cubo.
-    /// 
-    /// Puede usarse para:
-    /// - Sincronización entre dispositivos
-    /// - Búsqueda del objeto correcto al recibir datos
-    /// - Lógica de red (ej: mover cubo específico)
+    /// Debe ser único entre todos los CubeItem de la escena.
+    /// Ejemplos: "cubo_01", "cubo_rojo", "A1"
     /// </summary>
     public string cubeID;
 }
