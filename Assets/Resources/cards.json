@@ -1,0 +1,14 @@
+{
+  "cards": [
+    { "id": 1, "playerName": "Messi", "team": "Argentina", "position": "FW" },
+    { "id": 2, "playerName": "Mbappé", "team": "Francia", "position": "FW" },
+    { "id": 3, "playerName": "Bellingham", "team": "Inglaterra", "position": "CAM"},
+    { "id": 4, "playerName": "Vini Jr", "team": "Brasil", "position": "LW" },
+    { "id": 5, "playerName": "Savinho", "team": "Brasil", "position": "RW" },
+    { "id": 6, "playerName": "Wirtz", "team": "Alemania", "position": "CAM" },
+    { "id": 7, "playerName": "Musiala", "team": "Alemania", "position": "CAM" },
+    { "id": 8, "playerName": "Palmer", "team": "Inglaterra", "position": "CAM" },
+    { "id": 9, "playerName": "Gimenez", "team": "Mexico", "position": "ST" },
+    { "id": 10, "playerName": "Mora", "team": "Mexico", "position": "MC" }
+  ]
+}
