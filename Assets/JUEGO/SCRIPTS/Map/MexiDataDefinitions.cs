@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public class POIData
 {
     public string nombre;
-    public float lat;
-    public float lon;
+    public double lat;
+    public double lon;
     public string descripcion;
 }
 

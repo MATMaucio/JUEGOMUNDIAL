@@ -660,6 +660,10 @@ MonoBehaviour:
   playerTransform: {fileID: 1753566274}
   distance: 15
   smoothSpeed: 5
+  minDistance: 5
+  maxDistance: 60
+  zoomSpeedTouch: 0.05
+  zoomSpeedMouse: 10
   rotationSpeedX: 5
   rotationSpeedY: 3
   minVerticalAngle: 10
@@ -1374,7 +1378,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::POIManager
   playerMovementScript: {fileID: 1753566276}
   poiPrefab: {fileID: 2922638758978047926, guid: 4ee90a043cb8386488ef2bee0f9d8dde, type: 3}
-  spawnRadius: 400
+  spawnRadius: 800
 --- !u!4 &1686639959
 Transform:
   m_ObjectHideFlags: 0
@@ -1537,6 +1541,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   avatarTransform: {fileID: 1753566274}
   mapRendererScript: {fileID: 1143738850}
+  walkSpeed: 5
+  teleportThreshold: 30
 --- !u!1 &1980659956
 GameObject:
   m_ObjectHideFlags: 0
