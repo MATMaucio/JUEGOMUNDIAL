@@ -87,4 +87,5 @@ public class GPSController : MonoBehaviour
         Input.location.Stop();
         CancelInvoke(nameof(UpdatePlayerLocation));
     }
+    
 }
