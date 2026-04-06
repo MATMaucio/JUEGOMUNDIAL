@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 3088649389672055572}
   - component: {fileID: 628329852281502327}
   - component: {fileID: 7460254068201789288}
+  - component: {fileID: 2818352550783478193}
   m_Layer: 0
   m_Name: PlayerCard
   m_TagString: Untagged
@@ -168,6 +169,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardUI
   nameText: {fileID: 3362788861287843137}
   lockedOverlay: {fileID: 9087548517433386514}
+--- !u!114 &2818352550783478193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3683021461453727091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 904f324373594b14b8c26aa03b0bfe7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractablePOI
+  poiName: Parada Prueba
 --- !u!1 &4220474120447267683
 GameObject:
   m_ObjectHideFlags: 0
