@@ -53,7 +53,7 @@ public class QuizCollectionPanelController : MonoBehaviour
     {
         ClearCards();
 
-        if (catalogoGlobal == null || catalogoGlobal.Quizzes == null || tarjetaPrefab == null || tarjetasContainer == null)
+        if (!HasValidConfiguration())
         {
             return;
         }
@@ -129,6 +129,7 @@ public class QuizCollectionPanelController : MonoBehaviour
     {
         if (tarjetasContainer == null)
         {
+            WarnEs("Falta 'Tarjetas Container' en PanelColeccion.");
             return;
         }
 
@@ -176,5 +177,40 @@ public class QuizCollectionPanelController : MonoBehaviour
         layout.childForceExpandWidth = false;
         layout.childForceExpandHeight = false;
         layout.childAlignment = TextAnchor.UpperCenter;
+    }
+
+    private bool HasValidConfiguration()
+    {
+        bool ok = true;
+
+        if (catalogoGlobal == null || catalogoGlobal.Quizzes == null)
+        {
+            WarnEs("Falta 'Catalogo Global'. Crea y asigna QuizCollectionCatalog.");
+            ok = false;
+        }
+
+        if (tarjetaPrefab == null)
+        {
+            WarnEs("Falta 'Tarjeta Prefab' en PanelColeccion.");
+            ok = false;
+        }
+
+        if (tarjetasContainer == null)
+        {
+            WarnEs("Falta 'Tarjetas Container' en PanelColeccion.");
+            ok = false;
+        }
+
+        if (filtroInputField == null)
+        {
+            WarnEs("Falta 'Filtro Input Field'. El panel funcionara, pero sin filtro.");
+        }
+
+        return ok;
+    }
+
+    private void WarnEs(string mensaje)
+    {
+        Debug.LogWarning("[PanelColeccion] " + mensaje, this);
     }
 }

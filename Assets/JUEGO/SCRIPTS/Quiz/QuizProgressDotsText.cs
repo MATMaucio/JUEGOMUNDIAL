@@ -23,6 +23,8 @@ public class QuizProgressDotsText : MonoBehaviour
     private string progressSuffix = string.Empty;
     private Coroutine dotsRoutine;
     private Graphic sliderGraphic;
+    private bool warningSliderMostrado;
+    private bool warningTextoMostrado;
 
     public void SetTargets(TMP_Text label, Slider slider)
     {
@@ -63,6 +65,11 @@ public class QuizProgressDotsText : MonoBehaviour
         {
             ApplyProgressColor(answeredQuestions, totalQuestions);
         }
+        else if (!warningSliderMostrado && progressSlider == null)
+        {
+            WarnEs("Falta Slider de progreso. Asigna 'Progress Slider' en QuizCerebroController.");
+            warningSliderMostrado = true;
+        }
     }
 
     private void StartDotsAnimation()
@@ -97,6 +104,11 @@ public class QuizProgressDotsText : MonoBehaviour
             {
                 progressLabelText.text = baseLabel + new string('.', dots) + progressSuffix;
             }
+            else if (!warningTextoMostrado)
+            {
+                WarnEs("Falta texto de progreso. Asigna 'Progress Label Text' para ver Progreso...");
+                warningTextoMostrado = true;
+            }
 
             yield return new WaitForSeconds(dotIntervalSeconds);
         }
@@ -127,6 +139,16 @@ public class QuizProgressDotsText : MonoBehaviour
 
     private void ApplyProgressColor(int answeredQuestions, int totalQuestions)
     {
+        if (progressSlider == null)
+        {
+            if (!warningSliderMostrado)
+            {
+                WarnEs("Falta Slider de progreso. Asigna 'Progress Slider' en QuizCerebroController.");
+                warningSliderMostrado = true;
+            }
+            return;
+        }
+
         if (sliderGraphic == null)
         {
             CacheSliderGraphic();
@@ -160,5 +182,10 @@ public class QuizProgressDotsText : MonoBehaviour
 
         float t2 = (progress01 - 0.5f) / 0.5f;
         sliderGraphic.color = Color.Lerp(midProgressColor, completeProgressColor, t2);
+    }
+
+    private void WarnEs(string mensaje)
+    {
+        Debug.LogWarning("[Quiz] " + mensaje, this);
     }
 }

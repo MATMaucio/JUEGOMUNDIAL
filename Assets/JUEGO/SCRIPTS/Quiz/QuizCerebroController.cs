@@ -60,11 +60,14 @@ public class QuizCerebroController : MonoBehaviour
     private int respuestasCorrectasSesion;
     private int mejorStreakSesion;
     private bool resultadoSesionGuardado;
+    private bool warningConfiguracionMostrado;
+    private bool warningPreguntaTextMostrado;
 
     private void Start()
     {
         AutoSetupReferences();
         EnsureQuizId();
+        ValidateAndWarnConfiguration();
 
         if (siguienteButton != null)
         {
@@ -109,7 +112,7 @@ public class QuizCerebroController : MonoBehaviour
 
         if (runtimeQuestions.Count == 0)
         {
-            preguntaText.text = "No hay preguntas cargadas.";
+            SetPreguntaTextSafe("No hay preguntas cargadas.");
             ClearAnswers();
             UpdateTopTexts();
             UpdateProgress();
@@ -190,6 +193,12 @@ public class QuizCerebroController : MonoBehaviour
 
     private void ShowQuestion(int index)
     {
+        if (index < 0 || index >= runtimeQuestions.Count)
+        {
+            WarnEs("Indice de pregunta fuera de rango. Revisa la lista de preguntas cargadas.");
+            return;
+        }
+
         SetQuestionMode();
         SetQuizCompletadoVisible(false);
 
@@ -219,6 +228,24 @@ public class QuizCerebroController : MonoBehaviour
     {
         ClearAnswers();
 
+        if (answers == null || answers.Count == 0)
+        {
+            WarnEs("La pregunta actual no tiene respuestas. Agrega al menos una respuesta en QuizQuestionsController.");
+            return;
+        }
+
+        if (respuestasContainer == null)
+        {
+            WarnEs("Falta 'Respuestas Container' en QuizCerebroController. Asigna el contenedor de respuestas.");
+            return;
+        }
+
+        if (respuestaPrefab == null)
+        {
+            WarnEs("Falta 'Respuesta Prefab' en QuizCerebroController. Asigna el prefab de la tarjeta/boton de respuesta.");
+            return;
+        }
+
         if (answersLayout != null)
         {
             answersLayout.ConfigureForAnswerCount(answers.Count);
@@ -241,8 +268,20 @@ public class QuizCerebroController : MonoBehaviour
 
     private void OnAnswerSelected(QuizAnswerView selectedAnswer)
     {
+        if (selectedAnswer == null)
+        {
+            WarnEs("Se recibio una respuesta vacia. Revisa el prefab de respuesta.");
+            return;
+        }
+
         if (isResolving)
         {
+            return;
+        }
+
+        if (currentQuestionIndex < 0 || currentQuestionIndex >= runtimeQuestions.Count)
+        {
+            WarnEs("No hay pregunta activa valida para resolver. Revisa el flujo del quiz.");
             return;
         }
 
@@ -565,5 +604,60 @@ public class QuizCerebroController : MonoBehaviour
     public string GetQuizId()
     {
         return quizId;
+    }
+
+    private void ValidateAndWarnConfiguration()
+    {
+        if (warningConfiguracionMostrado)
+        {
+            return;
+        }
+
+        if (questionsController == null && questionSet == null)
+        {
+            WarnEs("No hay fuente de preguntas. Asigna QuizQuestionsController o QuizQuestionSet.");
+        }
+
+        if (respuestasContainer == null)
+        {
+            WarnEs("Falta 'Respuestas Container' en QuizCerebroController.");
+        }
+
+        if (respuestaPrefab == null)
+        {
+            WarnEs("Falta 'Respuesta Prefab' en QuizCerebroController.");
+        }
+
+        if (siguienteButton == null)
+        {
+            WarnEs("Falta 'Siguiente Button'. El quiz no podra avanzar manualmente.");
+        }
+
+        if (progressSlider == null)
+        {
+            WarnEs("Falta 'Progress Slider'. El progreso visual no se mostrara.");
+        }
+
+        warningConfiguracionMostrado = true;
+    }
+
+    private void SetPreguntaTextSafe(string value)
+    {
+        if (preguntaText != null)
+        {
+            preguntaText.text = value;
+            return;
+        }
+
+        if (!warningPreguntaTextMostrado)
+        {
+            WarnEs("Falta 'Pregunta Text'. Asigna un TMP_Text para mostrar la pregunta.");
+            warningPreguntaTextMostrado = true;
+        }
+    }
+
+    private void WarnEs(string mensaje)
+    {
+        Debug.LogWarning("[Quiz] " + mensaje, this);
     }
 }
